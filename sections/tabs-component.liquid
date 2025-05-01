@@ -1,0 +1,129 @@
+<!-- tabs-section.liquid -->
+<div class="tabs-section">
+  <ul class="tabs-header">
+    {% for block in section.blocks %}
+      <li class="tab-header" data-tab="tab{{ block.id }}">{{ block.settings.tab_title }}</li>
+    {% endfor %}
+  </ul>
+
+  <div class="tabs-content">
+    {% for block in section.blocks %}
+      <div id="tab{{ block.id }}" class="tab-pane">
+        {{ block.settings.tab_content }}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  /* Styling for tabs-section */
+  .tabs-header {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ccc;
+  }
+
+  .tab-header {
+    cursor: pointer;
+    padding: 10px;
+    margin-right: 10px;
+    background: #f0f0f0;
+  }
+
+  .tab-header.active {
+    border-bottom: 3px solid neonblue; /* Neon Blue Active Tab */
+    background: #000;
+    color: #fff;
+  }
+
+  .tab-pane {
+    display: none;
+  }
+
+  .tab-pane.active {
+    display: block;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.tab-header').forEach(tab => {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('.tab-header').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+      this.classList.add('active');
+      document.getElementById(this.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Tabbed Content",
+  "max_blocks": 10,
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_image",
+          "label": "Tab Image"
+        },
+        {
+          "type": "richtext",
+          "id": "tab_content",
+          "label": "Tab Content"
+        },
+        {
+          "type": "text",
+          "id": "tab_column1_title",
+          "label": "Column 1 Title"
+        },
+        {
+          "type": "richtext",
+          "id": "tab_column1_content",
+          "label": "Column 1 Content"
+        },
+        {
+          "type": "text",
+          "id": "tab_column2_title",
+          "label": "Column 2 Title"
+        },
+        {
+          "type": "richtext",
+          "id": "tab_column2_content",
+          "label": "Column 2 Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tabbed Content",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "tab_title": "Tab 1",
+            "tab_image": "",
+            "tab_content": "<p>Tab 1 content goes here.</p>",
+            "tab_column1_title": "Column 1",
+            "tab_column1_content": "<p>Content for column 1</p>",
+            "tab_column2_title": "Column 2",
+            "tab_column2_content": "<p>Content for column 2</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
