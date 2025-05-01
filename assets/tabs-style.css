@@ -1,0 +1,28 @@
+.tabs-header {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #ccc;
+}
+
+.tab-header {
+  cursor: pointer;
+  padding: 10px;
+  margin-right: 10px;
+  background: #f0f0f0;
+}
+
+.tab-header.active {
+  border-bottom: 3px solid neonblue; /* Neon Blue Active Tab */
+  background: #000;
+  color: #fff;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}

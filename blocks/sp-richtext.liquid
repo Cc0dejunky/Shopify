@@ -1,0 +1,590 @@
+{% comment %}
+  © Sections Pro. You are free to use this block in your store. You may not redistribute this block in another Shopify app.
+{% endcomment %}
+{% assign short_id = block.id | slice: -3, 3 %}
+
+<style>
+
+  
+{% if block.settings.override_fonts %}
+    {{ block.settings.text_font | font_face }}
+    {{ block.settings.headline_font | font_face }}
+{% endif %}
+
+#sprob-{{ block.id }} p {
+    font-size: {{ block.settings.text_size }}px;
+    {% if block.settings.override_fonts %}
+    font-family: {{ block.settings.text_font.family }}, {{ block.settings.text_font.fallback_families }};
+    font-weight: {{ block.settings.text_font.weight }};
+    {% endif %}
+    {% if block.settings.text_line_height != 'inherit' %}line-height: {{ block.settings.text_line_height }};{% endif %}
+    margin: 0 0 {{ block.settings.element_spacing }}px 0;
+    padding: 0;
+    color: {{ block.settings.text_color }};
+}
+
+#sprob-{{ block.id }} ul, #sprob-{{ block.id }} ol {
+    margin: 0 0 {{ block.settings.element_spacing }}px 0;
+}
+
+#sprob-{{ block.id }} li {
+    font-size: {{ block.settings.text_size }}px;
+    {% if block.settings.override_fonts %}
+    font-family: {{ block.settings.text_font.family }}, {{ block.settings.text_font.fallback_families }};
+    font-weight: {{ block.settings.text_font.weight }};
+    {% endif %}
+    {% if block.settings.text_line_height != 'inherit' %}line-height: {{ block.settings.text_line_height }};{% endif %}
+    margin: 0 0 5px 0;
+    padding: 0;
+    color: {{ block.settings.text_color }};
+}
+
+#sprob-{{ block.id }} li:last-child {
+    margin: 0;
+}
+
+#sprob-{{ block.id }} p a,
+#sprob-{{ block.id }} p a:visited
+#sprob-{{ block.id }} li a,
+#sprob-{{ block.id }} li a:visited {
+    color: {{ block.settings.link_color }};
+}
+
+@media (max-width: 800px) {
+    #sprob-{{ block.id }} p,
+    #sprob-{{ block.id }} li {
+        font-size: {{ block.settings.mobile_text_size }}px;
+    }
+}
+
+#sprob-{{ block.id }} h1,
+#sprob-{{ block.id }} h2,
+#sprob-{{ block.id }} h3,
+#sprob-{{ block.id }} h4,
+#sprob-{{ block.id }} h5 {
+    font-size: {{ block.settings.headline_size }}px;
+    {% if block.settings.override_fonts %}
+    font-family: {{ block.settings.headline_font.family }}, {{ block.settings.headline_font.fallback_families }};
+    font-weight: {{ block.settings.headline_font.weight }};
+    {% endif %}
+    {% if block.settings.headline_line_height != 'inherit' %}line-height: {{ block.settings.headline_line_height }};{% endif %}
+    margin: 0 0 {{ block.settings.element_spacing }}px 0;
+    padding: 0;
+    color: {{ block.settings.text_color }};
+}
+
+@media (max-width: 800px) {
+    #sprob-{{ block.id }} h1,
+    #sprob-{{ block.id }} h2,
+    #sprob-{{ block.id }} h3,
+    #sprob-{{ block.id }} h4,
+    #sprob-{{ block.id }} h5 {
+    font-size: {{ block.settings.mobile_headline_size }}px;
+    }
+}
+
+#sprob-{{ block.id }} h2 {
+    font-size: {{ block.settings.headline_size | minus:5  | at_least:13 }}px;
+}
+
+#sprob-{{ block.id }} h3 {
+    font-size: {{ block.settings.headline_size | minus:10 | at_least:13 }}px;
+}
+
+#sprob-{{ block.id }} h4 {
+    font-size: {{ block.settings.headline_size | minus:15 | at_least:13 }}px;
+}
+
+#sprob-{{ block.id }} h5 {
+    font-size: {{ block.settings.headline_size | minus:20 | at_least:13 }}px;
+}
+
+@media (max-width: 800px) {
+    #sprob-{{ block.id }} h2 {
+    font-size: {{ block.settings.mobile_headline_size | minus:5 | at_least:13 }}px;
+    }
+
+    #sprob-{{ block.id }} h3 {
+    font-size: {{ block.settings.mobile_headline_size | minus:10 | at_least:13 }}px;
+    }
+
+    #sprob-{{ block.id }} h4 {
+    font-size: {{ block.settings.mobile_headline_size | minus:15 | at_least:13 }}px;
+    }
+
+    #sprob-{{ block.id }} h5 {
+    font-size: {{ block.settings.mobile_headline_size | minus:20 | at_least:13 }}px;
+    }
+}
+
+  
+
+  {%- capture sp_content -%} 
+
+  #sprob-{{ block.id }} {
+      position: relative;
+      {% if block.settings.block_background_color %}background-image: {{ block.settings.block_background_color }};{% endif %}
+      width: 100%;
+      box-sizing: border-box;
+      padding: {{ block.settings.block_padding_top_bottom }}px {{ block.settings.block_padding_left_right }}px;
+      margin: 0 0 {{ block.settings.block_spacing }}px 0;
+  }
+
+  @media (max-width: 800px) {
+      #sprob-{{ block.id }} {
+        padding: {{ block.settings.mobile_block_padding_top_bottom }}px {{ block.settings.mobile_block_padding_left_right }}px;
+        margin: 0 0 {{ block.settings.block_spacing }}px 0;
+      }
+  }
+
+  {% if block.settings.show_on_device == 'mobile' %}
+    @media (min-width: 801px) {
+        #sprob-{{ block.id }} {
+            display: none;
+        }
+    }
+  {% endif %}
+
+  {% if block.settings.show_on_device == 'desktop' %}
+    @media (max-width: 800px) {
+        #sprob-{{ block.id }} {
+            display: none;
+        }
+    }
+  {% endif %}
+
+  #sprob-{{ block.id }} .sprob-container {
+      position: relative;
+      margin: 0;
+      {% if block.settings.container_background_color %}background-image: {{ block.settings.container_background_color }};{% endif %}
+      border-radius: {{ block.settings.container_radius }}px;
+      {% if block.settings.container_shadow %}
+        box-shadow: 0 0 5px 0 rgba(0,0,0,0.20);
+      {% endif %}
+      border: {{ block.settings.container_border_size }}px solid {{ block.settings.container_border_color }};
+      max-width: {{ block.settings.container_max_width }}px;
+      padding: {{ block.settings.container_padding_top_bottom }}px {{ block.settings.container_padding_left_right }}px;
+      overflow: hidden;
+  }
+
+  @media (max-width: 800px) {
+      #sprob-{{ block.id }} .sprob-container {
+      padding: {{ block.settings.mobile_container_padding_top_bottom }}px {{ block.settings.mobile_container_padding_left_right }}px;
+      }
+  }
+
+  
+  #sprob-{{ block.id }} .sprob-container * {
+    text-align: {{ block.settings.text_alignment }};
+  }
+
+  @media only screen and (min-width: 801px) {
+    #sprob-{{ block.id }} {
+      {{ block.settings.desktop_css }};
+    }
+  }
+
+  @media only screen and (max-width: 800px) {
+    #sprob-{{ block.id }} {
+      {{ block.settings.mobile_css }};
+    }
+  }
+
+  {%- endcapture -%} 
+
+  {%- liquid
+    assign chunks = sp_content | strip_newlines | split: ' ' | join: ' ' | split: '*/'
+    for chunk in chunks
+      assign mini = chunk | split: '/*' | first | strip | replace: ': ', ':' | replace: '; ', ';' | replace: '} ', '}' | replace: '{ ', '{' | replace: ' {', '{' | replace: ';}', '}'
+      echo mini
+    endfor
+  %}
+</style>
+
+<div id="sprob-{{ block.id }}" class="sprob-block">
+  <div class="sprob-container">
+    {{ block.settings.content }}
+  </div>
+</div>
+<!-- /.sprob-block -->
+
+{% schema %}
+{
+  "name": "🚀 Richtext",
+  "settings": [
+    
+    {
+        "type": "header",
+        "content": "Font",
+        "info": "Set the fonts for your block"
+    },
+    {
+        "type": "checkbox",
+        "id": "override_fonts",
+        "label": "Override theme fonts",
+        "default": false
+    },
+    {
+        "type": "font_picker",
+        "id": "headline_font",
+        "label": "Headline Font",
+        "default": "sans-serif"
+    },
+    {
+        "type": "font_picker",
+        "id": "text_font",
+        "label": "Text Font",
+        "default": "sans-serif"
+    },
+    {
+        "type": "header",
+        "content": "Text",
+        "info": "Set the text for your block"
+    },
+    {
+        "type": "range",
+        "id": "text_size",
+        "min": 10,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Text Size",
+        "default": 15
+    },
+    {
+        "type": "range",
+        "id": "mobile_text_size",
+        "min": 10,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile Text Size",
+        "default": 15
+    },
+    {
+        "type": "select",
+        "id": "text_line_height",
+        "label": "Text Line Height",
+        "options": [
+            {
+                "value": "0.75",
+                "label": "0.75"
+            },
+            {
+                "value": "1.0",
+                "label": "1.0"
+            },
+            {
+                "value": "1.1",
+                "label": "1.1"
+            },
+            {
+                "value": "1.2",
+                "label": "1.2"
+            },
+            {
+                "value": "1.3",
+                "label": "1.3"
+            },
+            {
+                "value": "1.4",
+                "label": "1.4"
+            },
+            {
+                "value": "1.5",
+                "label": "1.5"
+            },
+            {
+                "value": "1.6",
+                "label": "1.6"
+            },
+            {
+                "value": "1.7",
+                "label": "1.7"
+            },
+            {
+                "value": "1.8",
+                "label": "1.8"
+            },
+            {
+                "value": "1.9",
+                "label": "1.9"
+            },
+            {
+                "value": "2.0",
+                "label": "2.0"
+            },
+            {
+                "value": "inherit",
+                "label": "Inherit"
+            }
+        ],
+        "default": "inherit"
+    },
+    {
+        "type": "range",
+        "id": "headline_size",
+        "min": 10,
+        "max": 75,
+        "step": 1,
+        "unit": "px",
+        "label": "Headline Size",
+        "default": 40
+    },
+    {
+        "type": "range",
+        "id": "mobile_headline_size",
+        "min": 10,
+        "max": 75,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile Headline Size",
+        "default": 40
+    },
+    {
+        "type": "select",
+        "id": "headline_line_height",
+        "label": "Headline Line Height",
+        "options": [
+            {
+                "value": "0.75",
+                "label": "0.75"
+            },
+            {
+                "value": "1.0",
+                "label": "1.0"
+            },
+            {
+                "value": "1.1",
+                "label": "1.1"
+            },
+            {
+                "value": "1.2",
+                "label": "1.2"
+            },
+            {
+                "value": "1.3",
+                "label": "1.3"
+            },
+            {
+                "value": "1.4",
+                "label": "1.4"
+            },
+            {
+                "value": "1.5",
+                "label": "1.5"
+            },
+            {
+                "value": "1.6",
+                "label": "1.6"
+            },
+            {
+                "value": "1.7",
+                "label": "1.7"
+            },
+            {
+                "value": "1.8",
+                "label": "1.8"
+            },
+            {
+                "value": "1.9",
+                "label": "1.9"
+            },
+            {
+                "value": "2.0",
+                "label": "2.0"
+            },
+            {
+                "value": "inherit",
+                "label": "Inherit"
+            }
+        ],
+        "default": "inherit"
+    },
+    {
+        "type": "color",
+        "id": "text_color",
+        "default": "#111",
+        "label": "Text Color"
+    },
+    {
+        "type": "color",
+        "id": "link_color",
+        "default": "#005bd3",
+        "label": "Link Color"
+    }
+,
+    
+    {
+        "type": "header",
+        "content": "Block Design",
+        "info": "Set the design for the block"
+    },
+    {
+        "type": "select",
+        "id": "show_on_device",
+        "label": "Show Block",
+        "options": [
+            {
+                "value": "all",
+                "label": "All Devices"
+            },
+            {
+                "value": "mobile",
+                "label": "Mobile Only"
+            },
+            {
+                "value": "desktop",
+                "label": "Desktop Only"
+            }
+        ],
+        "default": "all"
+    },
+    {
+        "type": "color_background",
+        "id": "block_background_color",
+        "label": "Background Color"
+    },
+    {
+        "type": "number",
+        "id": "block_padding_top_bottom",
+        "default": 0,
+        "label": "Padding Top/Bottom"
+    },
+    {
+        "type": "number",
+        "id": "mobile_block_padding_top_bottom",
+        "default": 0,
+        "label": "Mobile Padding Top/Bottom"
+    },
+    {
+        "type": "number",
+        "id": "block_padding_left_right",
+        "default": 0,
+        "label": "Padding Left/Right"
+    },
+    {
+        "type": "number",
+        "id": "mobile_block_padding_left_right",
+        "default": 0,
+        "label": "Mobile Padding Left/Right"
+    },
+    {
+        "type": "number",
+        "id": "block_spacing",
+        "default": 0,
+        "label": "Block Spacing"
+    },
+    {
+        "type": "number",
+        "id": "mobile_block_spacing",
+        "default": 0,
+        "label": "Mobile Block Spacing"
+    },
+    {
+        "type": "header",
+        "content": "Container Design",
+        "info": "Set the design for your inner container"
+    },
+    {
+        "type": "color_background",
+        "id": "container_background_color",
+        "label": "Background Color"
+    },
+    {
+        "type": "number",
+        "id": "container_padding_top_bottom",
+        "default": 0,
+        "label": "Padding Top/Bottom"
+    },
+    {
+        "type": "number",
+        "id": "mobile_container_padding_top_bottom",
+        "default": 0,
+        "label": "Mobile Padding Top/Bottom"
+    },
+    {
+        "type": "number",
+        "id": "container_padding_left_right",
+        "default": 0,
+        "label": "Padding Left/Right"
+    },
+    {
+        "type": "number",
+        "id": "mobile_container_padding_left_right",
+        "default": 0,
+        "label": "Mobile Padding Left/Right"
+    },
+    {
+        "type": "number",
+        "id": "element_spacing",
+        "default": 10,
+        "label": "Spacing Between Elements"
+    },
+    {
+        "type": "range",
+        "id": "container_radius",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Round Borders on Container",
+        "default": 0
+    },
+    {
+        "type": "checkbox",
+        "id": "container_shadow",
+        "default": false,
+        "label": "Subtle Shadow on Container"
+    },
+    {
+        "type": "range",
+        "id": "container_border_size",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border Size on Container",
+        "default": 0
+    },
+    {
+        "type": "color",
+        "id": "container_border_color",
+        "default": "transparent",
+        "label": "Border Color on Container"
+    }
+,
+    {
+      "type": "header",
+      "content": "Content",
+      "info": "Set the content for the block"
+    },
+    {
+      "type": "text_alignment",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "default": "left"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<h3><b>Sample Richtext</b></h3><p>This is content for the expanding section. Use the richtext editor to create headlines, lists, and paragraphs.</p>"
+    },
+    {
+      "type": "liquid",
+      "id": "desktop_css",
+      "label": "Desktop CSS"
+    },
+    {
+      "type": "liquid",
+      "id": "mobile_css",
+      "label": "Mobile CSS"
+    }
+  ],
+  "presets": [
+    {
+      "name": "🚀 Richtext"
+    }]
+}
+{% endschema %}

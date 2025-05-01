@@ -1,0 +1,334 @@
+{% comment %}
+  © Sections Pro. You are free to use this block in your store. You may not redistribute this block in another Shopify app.
+{% endcomment %}
+{% assign short_id = block.id | slice: -3, 3 %}
+
+<style>
+  
+
+  {%- capture sp_content -%} 
+
+  #sprob-{{ block.id }} {
+      position: relative;
+      {% if block.settings.block_background_color %}background-image: {{ block.settings.block_background_color }};{% endif %}
+      width: 100%;
+      box-sizing: border-box;
+      padding: {{ block.settings.block_padding_top_bottom }}px {{ block.settings.block_padding_left_right }}px;
+      margin: 0 0 {{ block.settings.block_spacing }}px 0;
+  }
+
+  @media (max-width: 800px) {
+      #sprob-{{ block.id }} {
+        padding: {{ block.settings.mobile_block_padding_top_bottom }}px {{ block.settings.mobile_block_padding_left_right }}px;
+        margin: 0 0 {{ block.settings.block_spacing }}px 0;
+      }
+  }
+
+  {% if block.settings.show_on_device == 'mobile' %}
+    @media (min-width: 801px) {
+        #sprob-{{ block.id }} {
+            display: none;
+        }
+    }
+  {% endif %}
+
+  {% if block.settings.show_on_device == 'desktop' %}
+    @media (max-width: 800px) {
+        #sprob-{{ block.id }} {
+            display: none;
+        }
+    }
+  {% endif %}
+
+  #sprob-{{ block.id }} .sprob-container {
+      position: relative;
+      margin: 0;
+      {% if block.settings.container_background_color %}background-image: {{ block.settings.container_background_color }};{% endif %}
+      border-radius: {{ block.settings.container_radius }}px;
+      {% if block.settings.container_shadow %}
+        box-shadow: 0 0 5px 0 rgba(0,0,0,0.20);
+      {% endif %}
+      border: {{ block.settings.container_border_size }}px solid {{ block.settings.container_border_color }};
+      max-width: {{ block.settings.container_max_width }}px;
+      padding: {{ block.settings.container_padding_top_bottom }}px {{ block.settings.container_padding_left_right }}px;
+      overflow: hidden;
+  }
+
+  @media (max-width: 800px) {
+      #sprob-{{ block.id }} .sprob-container {
+      padding: {{ block.settings.mobile_container_padding_top_bottom }}px {{ block.settings.mobile_container_padding_left_right }}px;
+      }
+  }
+
+
+    #sprob-{{ block.id }} .sprob-container img {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    #sprob-{{ block.id }} .sprob-container {
+      aspect-ratio: {{ block.settings.media_aspect_ratio }};
+    }
+
+    #sprob-{{ block.id }} .sprob-container img {
+      display: block;
+      width: 100%;
+      position: relative;
+      {% if block.settings.media_aspect_ratio != 'auto' %}
+        aspect-ratio: {{ block.settings.media_aspect_ratio }};
+        object-fit: cover;
+      {% endif %}
+    }
+
+    @media only screen and (min-width: 801px) {
+      #sprob-{{ block.id }} {
+        {{ block.settings.desktop_css }};
+      }
+    }
+
+    @media only screen and (max-width: 800px) {
+      #sprob-{{ block.id }} {
+        {{ block.settings.mobile_css }};
+      }
+    }
+
+    {%- endcapture -%} 
+
+  {%- liquid
+    assign chunks = sp_content | strip_newlines | split: ' ' | join: ' ' | split: '*/'
+    for chunk in chunks
+      assign mini = chunk | split: '/*' | first | strip | replace: ': ', ':' | replace: '; ', ';' | replace: '} ', '}' | replace: '{ ', '{' | replace: ' {', '{' | replace: ';}', '}'
+      echo mini
+    endfor
+  %}
+</style>
+
+<div id="sprob-{{ block.id }}" class="sprob-block">
+  <div class="sprob-container">
+    {% if block.settings.image %}
+      <img
+        loading="lazy"
+        src="{{ block.settings.image | image_url: width: 600 }}"
+        srcset="
+          {{ block.settings.image| image_url: width: 600 }} 600w,
+          {{ block.settings.image | image_url: width: 800 }} 800w,
+          {{ block.settings.image | image_url: width: 1000 }} 1000w,
+          {{ block.settings.image | image_url: width: 1100 }} 1100w
+        "
+      >
+    {% else %}
+      <img src="data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg version='1.1' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Crect x='2' y='2' width='496' height='496' fill='%23D8D8D8' stroke='%23D8D8D8' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E">
+    {% endif %}
+  </div>
+  <!-- /.sprob-container -->
+</div>
+<!-- /.sprob-block -->
+
+{% schema %}
+{
+  "name": "🚀 Image",
+  "settings": [
+    
+    {
+        "type": "header",
+        "content": "Block Design",
+        "info": "Set the design for the block"
+    },
+    {
+        "type": "select",
+        "id": "show_on_device",
+        "label": "Show Block",
+        "options": [
+            {
+                "value": "all",
+                "label": "All Devices"
+            },
+            {
+                "value": "mobile",
+                "label": "Mobile Only"
+            },
+            {
+                "value": "desktop",
+                "label": "Desktop Only"
+            }
+        ],
+        "default": "all"
+    },
+    {
+        "type": "color_background",
+        "id": "block_background_color",
+        "label": "Background Color"
+    },
+    {
+        "type": "number",
+        "id": "block_padding_top_bottom",
+        "default": 0,
+        "label": "Padding Top/Bottom"
+    },
+    {
+        "type": "number",
+        "id": "mobile_block_padding_top_bottom",
+        "default": 0,
+        "label": "Mobile Padding Top/Bottom"
+    },
+    {
+        "type": "number",
+        "id": "block_padding_left_right",
+        "default": 0,
+        "label": "Padding Left/Right"
+    },
+    {
+        "type": "number",
+        "id": "mobile_block_padding_left_right",
+        "default": 0,
+        "label": "Mobile Padding Left/Right"
+    },
+    {
+        "type": "number",
+        "id": "block_spacing",
+        "default": 0,
+        "label": "Block Spacing"
+    },
+    {
+        "type": "number",
+        "id": "mobile_block_spacing",
+        "default": 0,
+        "label": "Mobile Block Spacing"
+    },
+    {
+        "type": "header",
+        "content": "Container Design",
+        "info": "Set the design for your inner container"
+    },
+    {
+        "type": "color_background",
+        "id": "container_background_color",
+        "label": "Background Color"
+    },
+    {
+        "type": "number",
+        "id": "container_padding_top_bottom",
+        "default": 0,
+        "label": "Padding Top/Bottom"
+    },
+    {
+        "type": "number",
+        "id": "mobile_container_padding_top_bottom",
+        "default": 0,
+        "label": "Mobile Padding Top/Bottom"
+    },
+    {
+        "type": "number",
+        "id": "container_padding_left_right",
+        "default": 0,
+        "label": "Padding Left/Right"
+    },
+    {
+        "type": "number",
+        "id": "mobile_container_padding_left_right",
+        "default": 0,
+        "label": "Mobile Padding Left/Right"
+    },
+    {
+        "type": "number",
+        "id": "element_spacing",
+        "default": 10,
+        "label": "Spacing Between Elements"
+    },
+    {
+        "type": "range",
+        "id": "container_radius",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Round Borders on Container",
+        "default": 5
+    },
+    {
+        "type": "checkbox",
+        "id": "container_shadow",
+        "default": true,
+        "label": "Subtle Shadow on Container"
+    },
+    {
+        "type": "range",
+        "id": "container_border_size",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border Size on Container",
+        "default": 0
+    },
+    {
+        "type": "color",
+        "id": "container_border_color",
+        "default": "#FFF",
+        "label": "Border Color on Container"
+    }
+,
+    {
+      "type": "header",
+      "content": "Display",
+      "info": "Set the display"
+    },
+    {
+      "type": "color_background",
+      "id": "caption_background_color",
+      "default": "linear-gradient(177deg, rgba(255, 255, 255, .5) 3%, rgba(255, 255, 255, .85) 100%)",
+      "label": "Caption Background Color"
+    },
+    {
+      "type": "select",
+      "id": "media_aspect_ratio",
+      "label": "Media Aspect Ratio",
+      "options": [
+        {
+          "value": "21 / 9",
+          "label": "21:9"
+        },
+        {
+          "value": "16 / 9",
+          "label": "16:9"
+        },
+        {
+          "value": "4 / 3",
+          "label": "4:3"
+        },
+        {
+          "value": "1 / 1",
+          "label": "1:1"
+        },
+        {
+          "value": "auto",
+          "label": "Auto"
+        }
+      ],
+      "default": "4 / 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "liquid",
+      "id": "desktop_css",
+      "label": "Desktop CSS"
+    },
+    {
+      "type": "liquid",
+      "id": "mobile_css",
+      "label": "Mobile CSS"
+    }
+  ],
+  "presets": [
+    {
+      "name": "🚀 Image"
+    }
+  ]
+}
+{% endschema %}
