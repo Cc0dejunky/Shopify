@@ -1,0 +1,68 @@
+{% comment %}
+  © Sections Pro. You are free to use this block in your store. You may not redistribute this block in another Shopify app.
+{% endcomment %}
+{% assign short_id = block.id | slice: -3, 3 %}
+
+<style>
+  #shopify-block-{{ block.id }}.shopify-block {
+    flex-basis: 100%;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  /* cols container */
+  #sprob-{{ block.id }} {
+    display: block;
+    margin: 0;
+    padding: 0;
+    align-items: {{ section.settings.vertical_alignment }};
+  }
+
+  #sprob-{{ block.id }} {
+    gap: {{ section.settings.grid_gap}}px;
+    position: relative;
+    z-index: 2;
+  }
+
+  @media only screen and (min-width: 801px) {
+    #sprob-{{ block.id }}:has(.sprob-col) {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+
+  /* Small devices (tablets, 768px and up) */
+  @media (max-width: 800px) {
+      #sprob-{{ block.id }}  {
+          display: block;
+      }
+
+      #sprob-{{ block.id }} .sprob-col {
+        display: block;
+        margin: 0 0 {{ section.settings.grid_gap}}px 0;
+      }
+
+      #sprob-{{ block.id }} .sprob-col:last-child {
+        margin: 0;
+      }
+  }
+</style>
+
+<div id="sprob-{{ block.id }}" class="sprob-row">
+  {% content_for 'blocks' %}
+</div>
+<!-- /#sprob-{{ block.id }} -->
+
+{% schema %}
+{
+  "name": "🚀 Row",
+  "settings": [
+  ],
+  "blocks": [{ "type": "@theme" }, { "type": "@app" }],
+  "presets": [
+    {
+      "name": "🚀 Row"
+    }]
+}
+{% endschema %}

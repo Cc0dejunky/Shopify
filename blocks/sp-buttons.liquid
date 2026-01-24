@@ -1,0 +1,420 @@
+{% comment %}
+  © Sections Pro. You are free to use this block in your store. You may not redistribute this block in another Shopify app.
+{% endcomment %}
+{% assign short_id = block.id | slice: -3, 3 %}
+
+<style>
+
+  
+
+  {%- capture sp_content -%} 
+
+  #sprob-{{ block.id }} {
+      position: relative;
+      {% if block.settings.block_background_color %}background-image: {{ block.settings.block_background_color }};{% endif %}
+      width: 100%;
+      box-sizing: border-box;
+      padding: {{ block.settings.block_padding_top_bottom }}px {{ block.settings.block_padding_left_right }}px;
+      margin: 0 0 {{ block.settings.block_spacing }}px 0;
+  }
+
+  @media (max-width: 800px) {
+      #sprob-{{ block.id }} {
+        padding: {{ block.settings.mobile_block_padding_top_bottom }}px {{ block.settings.mobile_block_padding_left_right }}px;
+        margin: 0 0 {{ block.settings.block_spacing }}px 0;
+      }
+  }
+
+  {% if block.settings.show_on_device == 'mobile' %}
+    @media (min-width: 801px) {
+        #sprob-{{ block.id }} {
+            display: none;
+        }
+    }
+  {% endif %}
+
+  {% if block.settings.show_on_device == 'desktop' %}
+    @media (max-width: 800px) {
+        #sprob-{{ block.id }} {
+            display: none;
+        }
+    }
+  {% endif %}
+
+  #sprob-{{ block.id }} .sprob-container {
+      position: relative;
+      margin: 0;
+      {% if block.settings.container_background_color %}background-image: {{ block.settings.container_background_color }};{% endif %}
+      border-radius: {{ block.settings.container_radius }}px;
+      {% if block.settings.container_shadow %}
+        box-shadow: 0 0 5px 0 rgba(0,0,0,0.20);
+      {% endif %}
+      border: {{ block.settings.container_border_size }}px solid {{ block.settings.container_border_color }};
+      max-width: {{ block.settings.container_max_width }}px;
+      padding: {{ block.settings.container_padding_top_bottom }}px {{ block.settings.container_padding_left_right }}px;
+      overflow: hidden;
+  }
+
+  @media (max-width: 800px) {
+      #sprob-{{ block.id }} .sprob-container {
+      padding: {{ block.settings.mobile_container_padding_top_bottom }}px {{ block.settings.mobile_container_padding_left_right }}px;
+      }
+  }
+
+  
+  #sprob-{{ block.id }} .sprob-button {
+    display: inline-block;
+    padding: {{ block.settings.button_padding_tb }}px {{ block.settings.button_padding_lr }}px;
+    background-image: {{ block.settings.button_background_color }};
+    border-radius: {{ block.settings.button_border_radius }}px;
+    border: {{ block.settings.button_border_size }}px solid {{ block.settings.button_border_color }};
+    color: {{ block.settings.button_text_color }};
+    font-size: {{ block.settings.button_text_size }}px;
+    text-decoration: none;
+    cursor: pointer;
+    text-shadow: none;
+    transition: .25s all;
+    margin: 0 5px 0 0;
+    {% if block.settings.button_shadow %}box-shadow: 0 0 5px 0 rgba(0,0,0,0.20);{% endif %}
+  }
+
+  #sprob-{{ block.id }} .sprob-button * {
+    color: {{ block.settings.button_text_color }};
+  }
+
+  {% if block.settings.button_animation %}
+    #sprob-{{ block.id }} .sprob-button:hover {
+      transform: translateY(-2px);
+    }
+  {% endif %}
+
+  #sprob-{{ block.id }}  .sprob-button-sec {
+    background-image: {{ block.settings.button_background_color_2 }};
+    color: {{ block.settings.button_text_color_2 }};
+  }
+
+  #sprob-{{ block.id }} .sprob-button-sec * {
+    color: {{ block.settings.button_text_color_2 }};
+  }
+
+    @media only screen and (min-width: 801px) {
+      #sprob-{{ block.id }} {
+        {{ block.settings.desktop_css }};
+      }
+    }
+  
+    @media only screen and (max-width: 800px) {
+      #sprob-{{ block.id }} {
+        {{ block.settings.mobile_css }};
+      }
+    }
+
+    {%- endcapture -%} 
+
+  {%- liquid
+    assign chunks = sp_content | strip_newlines | split: ' ' | join: ' ' | split: '*/'
+    for chunk in chunks
+      assign mini = chunk | split: '/*' | first | strip | replace: ': ', ':' | replace: '; ', ';' | replace: '} ', '}' | replace: '{ ', '{' | replace: ' {', '{' | replace: ';}', '}'
+      echo mini
+    endfor
+  %}
+</style>
+
+<div id="sprob-{{ block.id }}" class="sprob-block">
+  <div class="sprob-container">
+    <div style="margin: 0; padding: 0; text-align: {{ block.settings.alignment }};">
+      <a class="sprob-button" href="{{ block.settings.cta_link }}">{{ block.settings.cta }}</a>
+      {% if block.settings.show_secondary_button %}
+        <a class="sprob-button sprob-button-sec" href="{{ block.settings.cta_link_2 }}">{{ block.settings.cta_2 }}</a>
+      {% endif  %}
+    </div>
+  </div>
+</div>
+<!-- /.sprob-block -->
+
+{% schema %}
+{
+  "name": "🚀 Buttons",
+  "settings": [
+    
+    {
+        "type": "header",
+        "content": "Block Design",
+        "info": "Set the design for the block"
+    },
+    {
+        "type": "select",
+        "id": "show_on_device",
+        "label": "Show Block",
+        "options": [
+            {
+                "value": "all",
+                "label": "All Devices"
+            },
+            {
+                "value": "mobile",
+                "label": "Mobile Only"
+            },
+            {
+                "value": "desktop",
+                "label": "Desktop Only"
+            }
+        ],
+        "default": "all"
+    },
+    {
+        "type": "color_background",
+        "id": "block_background_color",
+        "label": "Background Color"
+    },
+    {
+        "type": "number",
+        "id": "block_padding_top_bottom",
+        "default": 0,
+        "label": "Padding Top/Bottom"
+    },
+    {
+        "type": "number",
+        "id": "mobile_block_padding_top_bottom",
+        "default": 0,
+        "label": "Mobile Padding Top/Bottom"
+    },
+    {
+        "type": "number",
+        "id": "block_padding_left_right",
+        "default": 0,
+        "label": "Padding Left/Right"
+    },
+    {
+        "type": "number",
+        "id": "mobile_block_padding_left_right",
+        "default": 0,
+        "label": "Mobile Padding Left/Right"
+    },
+    {
+        "type": "number",
+        "id": "block_spacing",
+        "default": 0,
+        "label": "Block Spacing"
+    },
+    {
+        "type": "number",
+        "id": "mobile_block_spacing",
+        "default": 0,
+        "label": "Mobile Block Spacing"
+    },
+    {
+        "type": "header",
+        "content": "Container Design",
+        "info": "Set the design for your inner container"
+    },
+    {
+        "type": "color_background",
+        "id": "container_background_color",
+        "label": "Background Color"
+    },
+    {
+        "type": "number",
+        "id": "container_padding_top_bottom",
+        "default": 0,
+        "label": "Padding Top/Bottom"
+    },
+    {
+        "type": "number",
+        "id": "mobile_container_padding_top_bottom",
+        "default": 0,
+        "label": "Mobile Padding Top/Bottom"
+    },
+    {
+        "type": "number",
+        "id": "container_padding_left_right",
+        "default": 0,
+        "label": "Padding Left/Right"
+    },
+    {
+        "type": "number",
+        "id": "mobile_container_padding_left_right",
+        "default": 0,
+        "label": "Mobile Padding Left/Right"
+    },
+    {
+        "type": "number",
+        "id": "element_spacing",
+        "default": 10,
+        "label": "Spacing Between Elements"
+    },
+    {
+        "type": "range",
+        "id": "container_radius",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Round Borders on Container",
+        "default": 0
+    },
+    {
+        "type": "checkbox",
+        "id": "container_shadow",
+        "default": false,
+        "label": "Subtle Shadow on Container"
+    },
+    {
+        "type": "range",
+        "id": "container_border_size",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border Size on Container",
+        "default": 0
+    },
+    {
+        "type": "color",
+        "id": "container_border_color",
+        "default": "transparent",
+        "label": "Border Color on Container"
+    }
+,
+    {
+      "type": "header",
+      "content": "Primary Button",
+      "info": "Set content for the primary button"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignment",
+      "default": "left"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "cta",
+      "default": "Shop Now",
+      "label": "Call to Action"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Call to Action Link"
+    },
+    {
+      "type": "header",
+      "content": "Secondary Button",
+      "info": "Set content for the secondary button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_button",
+      "default": false,
+      "label": "Show Secondary Action?"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "cta_2",
+      "default": "Secondary Action",
+      "label": "Call to Action"
+    },
+    {
+      "type": "url",
+      "id": "cta_link_2",
+      "label": "Call to Action Link"
+    },
+    {
+      "type": "header",
+      "content": "Button Style",
+      "info": "Set the look and feel of the button"
+    },
+    {
+      "type": "color_background",
+      "id": "button_background_color",
+      "default": "linear-gradient(164deg, #111 0%, #333 100%)",
+      "label": "Primary Button Background Color"
+    },
+    {
+      "type": "color_background",
+      "id": "button_background_color_2",
+      "default": "linear-gradient(164deg, #111 0%, #333 100%)",
+      "label": "Secondary Button Background Color"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "default": "#fff",
+      "label": "Primary Button Text Color"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color_2",
+      "default": "#fff",
+      "label": "Secondary Button Text Color"
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Text Size",
+      "default": 15
+    },
+    {
+      "type": "number",
+      "id": "button_padding_tb",
+      "default": 10,
+      "label": "Padding Top/Bottom"
+    },
+    {
+      "type": "number",
+      "id": "button_padding_lr",
+      "default": 25,
+      "label": "Padding Left/Right"
+    },
+    {
+      "type": "number",
+      "id": "button_border_radius",
+      "default": 5,
+      "label": "Border Radius"
+    },
+    {
+      "type": "number",
+      "id": "button_border_size",
+      "default": 0,
+      "label": "Border Size"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "default": "#111",
+      "label": "Border Color"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_shadow",
+      "default": true,
+      "label": "Subtle Shadow on Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_animation",
+      "default": false,
+      "label": "Subtle Lift Animation on Link"
+    },
+    {
+      "type": "liquid",
+      "id": "desktop_css",
+      "label": "Desktop CSS"
+    },
+    {
+      "type": "liquid",
+      "id": "mobile_css",
+      "label": "Mobile CSS"
+    }
+  ],
+  "presets": [
+    {
+      "name": "🚀 Buttons"
+    }]
+}
+{% endschema %}

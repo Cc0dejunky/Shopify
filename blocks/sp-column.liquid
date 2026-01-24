@@ -1,0 +1,39 @@
+{% comment %}
+  © Sections Pro. You are free to use this block in your store. You may not redistribute this block in another Shopify app.
+{% endcomment %}
+{% assign short_id = block.id | slice: -3, 3 %}
+
+<style>
+  #shopify-block-{{ block.id }} {
+    flex: {{ block.settings.flex }};
+  }
+</style>
+
+<div id="sprob-{{ block.id }}" class="sprob-col">
+  {% content_for 'blocks' %}
+</div>
+<!-- /#sprob-{{ block.id }} -->
+
+{% schema %}
+{
+  "name": "🚀 Column",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Column Width",
+      "info": "Set the width of the column. The flex will determine the width of the column relative to other columns in the same row."
+    },
+    {
+      "type": "number",
+      "id": "flex",
+      "label": "Flex",
+      "default": 1
+    }
+  ],
+  "blocks": [{ "type": "@theme" }, { "type": "@app" }],
+  "presets": [
+    {
+      "name": "🚀 Column"
+    }]
+}
+{% endschema %}
