@@ -48,13 +48,4 @@ export default function SlotMachine() {
   );
 }
 
-const CUSTOMER_GAME_DATA_QUERY = `#graphql
-  query getCustomerGameData {
-    customer {
-      firstName
-      onboarding_completed: metafield(namespace: "custom", key: "onboarding_completed") {
-        value
-      }
-    }
-  }
-`;
+import { CUSTOMER_GAME_DATA_QUERY } from '~/graphql/customer-account/CustomerGameDataQuery';
