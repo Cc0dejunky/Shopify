@@ -1,7 +1,8 @@
 // Virtual entry point for the app
-import {storefrontRedirect} from '@shopify/hydrogen';
-import {createRequestHandler} from '@shopify/hydrogen/oxygen';
-import {createHydrogenRouterContext} from '~/lib/context';
+import { storefrontRedirect } from '@shopify/hydrogen';
+import { createRequestHandler } from '@shopify/hydrogen/oxygen';
+import * as serverBuild from 'virtual:react-router/server-build';
+import { createHydrogenRouterContext } from '~/lib/context';
 
 /**
  * Export a fetch handler in module format.
@@ -24,8 +25,7 @@ export default {
        * Hydrogen's Storefront client to the loader context.
        */
       const handleRequest = createRequestHandler({
-        // eslint-disable-next-line import/no-unresolved
-        build: await import('virtual:react-router/server-build'),
+        build: serverBuild,
         mode: process.env.NODE_ENV,
         getLoadContext: () => hydrogenContext,
       });
@@ -55,7 +55,7 @@ export default {
       return response;
     } catch (error) {
       console.error(error);
-      return new Response('An unexpected error occurred', {status: 500});
+      return new Response('An unexpected error occurred', { status: 500 });
     }
   },
 };

@@ -19,8 +19,9 @@ export async function loader({ context }: Route.LoaderArgs) {
     };
   }
 
-  const response = await customerAccount.query(CUSTOMER_GAME_DATA_QUERY);
-  const customer = (response as any).data.customer;
+  const queryResult = await customerAccount.query(CUSTOMER_GAME_DATA_QUERY);
+  const data = (queryResult as any).data;
+  const customer = data?.customer;
 
   // READ RULE: If onboarding isn't completed, force redirect to the onboarding flow
   const onboardingCompleted = customer?.onboarding_completed?.value === 'true';

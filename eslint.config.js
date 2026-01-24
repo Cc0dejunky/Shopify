@@ -87,6 +87,7 @@ export default [
       ],
       'no-useless-escape': 'off',
       'no-case-declarations': 'off',
+      'import/no-unresolved': ['error', {ignore: ['^virtual:']}],
     },
   },
   ...fixupConfigRules(

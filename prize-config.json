@@ -1,0 +1,308 @@
+{
+  "gameConfig": {
+    "name": "Hacker Slots",
+    "version": "1.0.0",
+    "gridSize": {
+      "rows": 5,
+      "cols": 5
+    },
+    "symbols": [
+      "0",
+      "1"
+    ],
+    "costPerSpin": 1,
+    "targetRTP": 92,
+    "description": "Fair 5x5 binary slot machine with provable randomness",
+    "economicsModel": "pooled",
+    "revenueAllocation": {
+      "prizePool": 0.50,
+      "profit": 0.42,
+      "operating": 0.08
+    },
+    "notes": "50% of all credit purchases go to prize pool. Prizes are ONLY awarded if pool can afford them. You NEVER pay out of pocket."
+  },
+  "prizePool": {
+    "startingBalance": 0,
+    "minimumBalance": 50,
+    "description": "Prize pool funded by 50% of credit purchases. Big prizes only available when pool is funded."
+  },
+  "prizes": [
+    {
+      "id": "free_spins_mega",
+      "name": "MEGA LUCKY: 50 Free Spins",
+      "type": "game_credits",
+      "value": 50,
+      "actualCost": 0,
+      "probability": 0.005,
+      "pattern": "all_ones",
+      "shopifyProductId": null,
+      "description": "50 free game credits - play more!",
+      "poolRequired": 0,
+      "tier": "always_available"
+    },
+    {
+      "id": "free_spins_big",
+      "name": "BIG LUCKY: 20 Free Spins",
+      "type": "game_credits",
+      "value": 20,
+      "actualCost": 0,
+      "probability": 0.01,
+      "pattern": "all_zeros",
+      "shopifyProductId": null,
+      "description": "20 free game credits",
+      "poolRequired": 0,
+      "tier": "always_available"
+    },
+    {
+      "id": "gadget_small",
+      "name": "Mystery Gadget",
+      "type": "physical_prize",
+      "value": 5,
+      "actualCost": 3,
+      "probability": 0.02,
+      "pattern": "five_line_any",
+      "shopifyProductId": null,
+      "description": "Random gadget from our collection (USB accessories, phone stands, etc)",
+      "poolRequired": 50,
+      "tier": "small_physical",
+      "aliexpressLink": "https://aliexpress.com/... (you configure this)"
+    },
+    {
+      "id": "tech_accessory",
+      "name": "Tech Accessory Prize",
+      "type": "physical_prize",
+      "value": 15,
+      "actualCost": 5,
+      "probability": 0.008,
+      "pattern": "four_line_any",
+      "shopifyProductId": null,
+      "description": "Wireless earbuds, power bank, or similar ($15 value)",
+      "poolRequired": 200,
+      "tier": "medium_physical"
+    },
+    {
+      "id": "premium_gadget",
+      "name": "Premium Tech Prize",
+      "type": "physical_prize",
+      "value": 50,
+      "actualCost": 25,
+      "probability": 0.002,
+      "pattern": "three_line_any",
+      "shopifyProductId": null,
+      "description": "Smart watch, tablet, or premium accessory",
+      "poolRequired": 1000,
+      "tier": "premium_physical"
+    },
+    {
+      "id": "jackpot_phone",
+      "name": "JACKPOT: Mobile Phone",
+      "type": "physical_prize",
+      "value": 300,
+      "actualCost": 150,
+      "probability": 0.0001,
+      "pattern": "diagonal_5",
+      "shopifyProductId": null,
+      "description": "Brand new smartphone (only available when prize pool > $2000)",
+      "poolRequired": 2000,
+      "tier": "jackpot"
+    },
+    {
+      "id": "gift_card_small",
+      "name": "$5 Store Gift Card",
+      "type": "gift_card",
+      "value": 5,
+      "actualCost": 5,
+      "probability": 0.05,
+      "pattern": "five_line_any",
+      "shopifyProductId": null,
+      "description": "$5 gift card for use in our store",
+      "poolRequired": 0,
+      "tier": "small_reward"
+    },
+    {
+      "id": "gift_card_medium",
+      "name": "$20 Store Gift Card",
+      "type": "gift_card",
+      "value": 20,
+      "actualCost": 20,
+      "probability": 0.01,
+      "pattern": "four_line_any",
+      "shopifyProductId": null,
+      "description": "$20 gift card for use in our store",
+      "poolRequired": 100,
+      "tier": "medium_reward"
+    },
+    {
+      "id": "free_credits_small",
+      "name": "Lucky Bonus",
+      "type": "game_credits",
+      "value": 5,
+      "actualCost": 0,
+      "probability": 0.15,
+      "pattern": "cluster_3x3",
+      "shopifyProductId": null,
+      "description": "5 free credits",
+      "poolRequired": 0,
+      "tier": "always_available"
+    },
+    {
+      "id": "free_credits_tiny",
+      "name": "Mini Bonus",
+      "type": "game_credits",
+      "value": 2,
+      "actualCost": 0,
+      "probability": 0.25,
+      "pattern": "any_vertical_3",
+      "shopifyProductId": null,
+      "description": "2 free credits",
+      "poolRequired": 0,
+      "tier": "always_available"
+    }
+  ],
+  "patterns": {
+    "all_ones": {
+      "description": "All 25 positions are 1",
+      "validator": "checkAllSame",
+      "params": {
+        "symbol": "1",
+        "count": 25
+      }
+    },
+    "all_zeros": {
+      "description": "All 25 positions are 0",
+      "validator": "checkAllSame",
+      "params": {
+        "symbol": "0",
+        "count": 25
+      }
+    },
+    "five_line_any": {
+      "description": "5 matching symbols in any line (horizontal, vertical, or diagonal)",
+      "validator": "checkLines",
+      "params": {
+        "length": 5,
+        "directions": [
+          "horizontal",
+          "vertical",
+          "diagonal"
+        ]
+      }
+    },
+    "four_line_any": {
+      "description": "4 matching symbols in any line",
+      "validator": "checkLines",
+      "params": {
+        "length": 4,
+        "directions": [
+          "horizontal",
+          "vertical",
+          "diagonal"
+        ]
+      }
+    },
+    "three_line_any": {
+      "description": "3 matching symbols in any line",
+      "validator": "checkLines",
+      "params": {
+        "length": 3,
+        "directions": [
+          "horizontal",
+          "vertical",
+          "diagonal"
+        ]
+      }
+    },
+    "diagonal_5": {
+      "description": "5 matching symbols in main diagonals",
+      "validator": "checkDiagonals",
+      "params": {
+        "length": 5
+      }
+    },
+    "cluster_3x3": {
+      "description": "3x3 cluster of matching symbols",
+      "validator": "checkCluster",
+      "params": {
+        "size": 3
+      }
+    },
+    "any_vertical_3": {
+      "description": "3 matching in any vertical column",
+      "validator": "checkLines",
+      "params": {
+        "length": 3,
+        "directions": [
+          "vertical"
+        ]
+      }
+    }
+  },
+  "economicsBreakdown": {
+    "example_$10_purchase": {
+      "prizePool": "$5.00 (to fund prizes)",
+      "yourProfit": "$4.20 (42% - guaranteed!)",
+      "operating": "$0.80 (8% - Shopify fees, etc)",
+      "explanation": "You make $4.20 profit on EVERY $10 purchase. The prize pool pays for prizes, so you NEVER pay out of pocket."
+    },
+    "howItWorks": [
+      "Player buys $10 in credits (100 credits)",
+      "50% ($5) goes to prize pool",
+      "42% ($4.20) is YOUR guaranteed profit",
+      "8% ($0.80) covers operating costs",
+      "When player wins a $5 gadget, it's paid from the $5 pool (costs you $3 on AliExpress)",
+      "You still keep your $4.20 profit!",
+      "Pool balance grows over time, unlocking bigger prizes"
+    ],
+    "safeguards": [
+      "Physical prizes ONLY awarded if pool balance >= prize cost",
+      "Free credits (no cost) always available",
+      "Big prizes (phones) require $2000+ pool balance",
+      "If pool is low, only free credit prizes are given"
+    ]
+  },
+  "fairnessConfig": {
+    "algorithm": "provably_fair",
+    "hashFunction": "SHA-256",
+    "seedRotation": "per_spin",
+    "publicVerification": true,
+    "auditLog": true
+  },
+  "creditPackages": [
+    {
+      "credits": 10,
+      "price": 1.00,
+      "bonus": 0,
+      "shopifyProductId": null,
+      "yourProfit": 0.42,
+      "toPool": 0.50,
+      "operating": 0.08
+    },
+    {
+      "credits": 50,
+      "price": 5.00,
+      "bonus": 5,
+      "shopifyProductId": null,
+      "yourProfit": 2.10,
+      "toPool": 2.50,
+      "operating": 0.40
+    },
+    {
+      "credits": 100,
+      "price": 10.00,
+      "bonus": 15,
+      "shopifyProductId": null,
+      "yourProfit": 4.20,
+      "toPool": 5.00,
+      "operating": 0.80
+    },
+    {
+      "credits": 500,
+      "price": 40.00,
+      "bonus": 100,
+      "shopifyProductId": null,
+      "yourProfit": 16.80,
+      "toPool": 20.00,
+      "operating": 3.20
+    }
+  ]
+}

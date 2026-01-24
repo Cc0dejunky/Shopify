@@ -30,7 +30,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
     }
 
     // 1. Get the current customer's ID
-    const { data: customerData } = await customerAccount.query<{ customer: { id: string } | null }>(`
+    const queryResult = await customerAccount.query<{ customer: { id: string } | null }>(`
         query CurrentCustomer {
             customer {
                 id
@@ -38,7 +38,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
         }
     `);
 
-    const customerId = customerData?.customer?.id;
+    const customerId = queryResult.data?.customer?.id;
     if (!customerId) {
         return { error: 'Could not find customer profile.' };
     }
